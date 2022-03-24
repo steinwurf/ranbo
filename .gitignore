@@ -24,6 +24,7 @@ waf3-*
 .waf3-*
 .lock-*
 build
+build_current
 resolve_symlinks
 resolved_dependencies
 
@@ -60,3 +61,7 @@ VSProjects
 
 # Visual Studio Code
 .vscode
+
+# Benchmarks
+benchmark_results
+virtualenv-plots
