@@ -7,6 +7,7 @@
 #include <benchmark/benchmark.h>
 
 #include <ranbo/xoshiro256ss.h>
+#include <ranbo/xoshiro64s.h>
 
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
@@ -31,6 +32,8 @@ static void boost_mt_seed(benchmark::State& state, std::size_t number_of_seeds)
 
     benchmark::DoNotOptimize(generator);
 
+    std::size_t bytes = 0;
+
     auto seeds = generate_seeds(number_of_seeds);
     for (auto _ : state)
     {
@@ -38,8 +41,10 @@ static void boost_mt_seed(benchmark::State& state, std::size_t number_of_seeds)
         {
             generator.seed((uint32_t)seed);
             benchmark::ClobberMemory();
+            bytes += 4;
         }
     }
+    state.SetBytesProcessed(bytes);
 }
 
 static void xoshiro256ss_seed(benchmark::State& state,
@@ -49,6 +54,8 @@ static void xoshiro256ss_seed(benchmark::State& state,
 
     benchmark::DoNotOptimize(generator);
 
+    std::size_t bytes = 0;
+
     auto seeds = generate_seeds(number_of_seeds);
     for (auto _ : state)
     {
@@ -57,8 +64,10 @@ static void xoshiro256ss_seed(benchmark::State& state,
 
             ranbo_xoshiro256ss_set_seed(&generator, seed);
             benchmark::ClobberMemory();
+            bytes += 8;
         }
     }
+    state.SetBytesProcessed(bytes);
 }
 
 static void std_mt_seed(benchmark::State& state, std::size_t number_of_seeds)
@@ -67,6 +76,8 @@ static void std_mt_seed(benchmark::State& state, std::size_t number_of_seeds)
 
     benchmark::DoNotOptimize(generator);
 
+    std::size_t bytes = 0;
+
     auto seeds = generate_seeds(number_of_seeds);
     for (auto _ : state)
     {
@@ -74,8 +85,33 @@ static void std_mt_seed(benchmark::State& state, std::size_t number_of_seeds)
         {
             generator.seed(seed);
             benchmark::ClobberMemory();
+            bytes += 8;
         }
     }
+    state.SetBytesProcessed(bytes);
+}
+
+static void xoshiro64s_seed(benchmark::State& state,
+                            std::size_t number_of_seeds)
+{
+    struct ranbo_xoshiro64s generator;
+
+    benchmark::DoNotOptimize(generator);
+
+    std::size_t bytes = 0;
+
+    auto seeds = generate_seeds(number_of_seeds);
+    for (auto _ : state)
+    {
+        for (auto seed : seeds)
+        {
+
+            ranbo_xoshiro64s_set_seed(&generator, seed);
+            benchmark::ClobberMemory();
+            bytes += 8;
+        }
+    }
+    state.SetBytesProcessed(bytes);
 }
 
 static void BenchmarkArguments(benchmark::internal::Benchmark* b)
@@ -90,6 +126,9 @@ BENCHMARK_CAPTURE(boost_mt_seed, mersenne_boost, 100000)
 BENCHMARK_CAPTURE(std_mt_seed, mersenne_std, 100000)->Apply(BenchmarkArguments);
 
 BENCHMARK_CAPTURE(xoshiro256ss_seed, xoshiro256ss, 100000)
+    ->Apply(BenchmarkArguments);
+
+BENCHMARK_CAPTURE(xoshiro64s_seed, xoshiro64s, 100000)
     ->Apply(BenchmarkArguments);
 
 BENCHMARK_MAIN();
