@@ -38,7 +38,7 @@ void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* generator,
                                uint64_t seed)
 {
     generator->seed = seed;
-    uint64_t temp_seed = 0;
+    uint64_t temp_seed = seed;
     temp_seed = ranbo_detail_xoshiro64s_split_and_mix_seed(&temp_seed);
     generator->seed_parts[0] =
         (uint32_t)((temp_seed & 0xFFFFFFFF00000000LL) >> 32);
