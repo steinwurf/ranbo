@@ -17,7 +17,7 @@ struct ranbo_xoshiro256ss
                         13959451808893450918U, 2391539541053276776U};
 };
 
-uint64_t ranbo_detail_xoshiro256ss_split_and_mix_seed(uint64_t* seed)
+static uint64_t ranbo_detail_xoshiro256ss_split_and_mix_seed(uint64_t* seed)
 {
     uint64_t mix = (*seed += MIX_CONSTANT_1);
     mix = (mix ^ (mix >> 30)) * MIX_CONSTANT_2;
@@ -25,13 +25,14 @@ uint64_t ranbo_detail_xoshiro256ss_split_and_mix_seed(uint64_t* seed)
     return mix ^ (mix >> 31);
 }
 
-uint64_t ranbo_detail_xoshiro256ss_rotate(uint64_t number, int bits_to_rotate)
+static uint64_t ranbo_detail_xoshiro256ss_rotate(uint64_t number,
+                                                 int bits_to_rotate)
 {
     return (number << bits_to_rotate) | (number >> (64 - bits_to_rotate));
 }
 
-void ranbo_xoshiro256ss_set_seed(struct ranbo_xoshiro256ss* generator,
-                                 uint64_t seed)
+static void ranbo_xoshiro256ss_set_seed(struct ranbo_xoshiro256ss* generator,
+                                        uint64_t seed)
 {
     generator->seed[0] = ranbo_detail_xoshiro256ss_split_and_mix_seed(&seed);
     generator->seed[1] =
@@ -42,7 +43,8 @@ void ranbo_xoshiro256ss_set_seed(struct ranbo_xoshiro256ss* generator,
         ranbo_detail_xoshiro256ss_split_and_mix_seed(&(generator->seed[2]));
 }
 
-uint64_t ranbo_xoshiro256ss_generate(struct ranbo_xoshiro256ss* generator)
+static uint64_t
+ranbo_xoshiro256ss_generate(struct ranbo_xoshiro256ss* generator)
 {
     uint64_t result =
         ranbo_detail_xoshiro256ss_rotate(generator->seed[1] * 5, 7) * 9;
