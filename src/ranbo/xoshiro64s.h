@@ -16,8 +16,7 @@
 
 struct ranbo_xoshiro64s
 {
-    uint64_t seed = 1;
-    uint32_t seed_parts[2] = {3793791033U, 2065550767U};
+    uint32_t seed[2] = {3793791033U, 2065550767U};
 };
 
 static uint32_t ranbo_detail_xoshiro64s_rotate(uint32_t number,
@@ -38,26 +37,21 @@ static uint64_t ranbo_detail_xoshiro64s_split_and_mix_seed(uint64_t* seed)
 static void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* generator,
                                       uint64_t seed)
 {
-    generator->seed = seed;
     uint64_t temp_seed = seed;
     temp_seed = ranbo_detail_xoshiro64s_split_and_mix_seed(&temp_seed);
-    generator->seed_parts[0] =
-        (uint32_t)((temp_seed & 0xFFFFFFFF00000000LL) >> 32);
-    generator->seed_parts[1] = (uint32_t)(temp_seed & 0xFFFFFFFFLL);
+    generator->seed[0] = (uint32_t)((temp_seed & 0xFFFFFFFF00000000LL) >> 32);
+    generator->seed[1] = (uint32_t)(temp_seed & 0xFFFFFFFFLL);
 }
 
 static uint32_t ranbo_xoshiro64s_generate(struct ranbo_xoshiro64s* generator)
 {
-    uint32_t s1 = generator->seed_parts[1];
-    uint32_t result = generator->seed_parts[0] * MULT_CONSTANT;
+    uint32_t s1 = generator->seed[1];
+    uint32_t result = generator->seed[0] * MULT_CONSTANT;
 
-    s1 ^= generator->seed_parts[0];
-    generator->seed_parts[0] =
-        ranbo_detail_xoshiro64s_rotate(generator->seed_parts[0], 26) ^
-        generator->seed_parts[1] ^ (generator->seed_parts[1] << 9);
-    generator->seed_parts[1] =
-        ranbo_detail_xoshiro64s_rotate(generator->seed_parts[1], 13);
-    generator->seed =
-        ((uint64_t)generator->seed_parts[0]) << 32 | generator->seed_parts[1];
+    s1 ^= generator->seed[0];
+    generator->seed[0] =
+        ranbo_detail_xoshiro64s_rotate(generator->seed[0], 26) ^
+        generator->seed[1] ^ (generator->seed[1] << 9);
+    generator->seed[1] = ranbo_detail_xoshiro64s_rotate(generator->seed[1], 13);
     return result;
 }

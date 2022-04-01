@@ -3,7 +3,14 @@
 
 bld.program(
     features="cxx",
-    source=bld.path.ant_glob("*.cpp"),
+    source="bit_occurrences.cpp",
+    target="bit_occurrences_example",
+    use=["ranbo_includes", "boost_includes"],
+)
+
+bld.program(
+    features="cxx",
+    source="hello_world.cpp",
     target="hello_world_example",
     use=["ranbo_includes"],
 )
