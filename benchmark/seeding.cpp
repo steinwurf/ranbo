@@ -29,6 +29,8 @@ static void xoshiro256ss_seed(benchmark::State& state,
 {
     struct ranbo_xoshiro256ss generator;
 
+    ranbo_xoshiro256ss_set_seed(&generator, 0U);
+
     benchmark::DoNotOptimize(generator);
 
     std::size_t bytes = 0;
@@ -73,6 +75,8 @@ static void xoshiro64s_seed(benchmark::State& state,
 {
     struct ranbo_xoshiro64s generator;
 
+    ranbo_xoshiro64s_set_seed(&generator, 0U);
+
     benchmark::DoNotOptimize(generator);
 
     std::size_t bytes = 0;
@@ -94,6 +98,8 @@ static void xoshiro64s_seed(benchmark::State& state,
 static void rand48_seed(benchmark::State& state, std::size_t number_of_seeds)
 {
     struct ranbo_rand48 rand48;
+
+    ranbo_rand48_set_seed(&rand48, 0U);
 
     benchmark::DoNotOptimize(rand48);
 
