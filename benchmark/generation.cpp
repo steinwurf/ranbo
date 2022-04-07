@@ -6,6 +6,7 @@
 
 #include <benchmark/benchmark.h>
 
+#include <ranbo/rand48.h>
 #include <ranbo/xoshiro256ss.h>
 #include <ranbo/xoshiro64s.h>
 
@@ -86,6 +87,26 @@ static void xoshiro64s_generate(benchmark::State& state, std::size_t iterations)
     state.SetBytesProcessed(bytes);
 }
 
+static void rand48_generate(benchmark::State& state, std::size_t iterations)
+{
+    struct ranbo_rand48 rand48;
+
+    ranbo_rand48_set_seed(&rand48, 0);
+
+    std::size_t bytes = 0;
+
+    for (auto _ : state)
+    {
+        for (std::size_t i = 0; i < iterations; i++)
+        {
+            benchmark::DoNotOptimize(ranbo_rand48_generate(&rand48));
+            bytes += 4;
+            benchmark::ClobberMemory();
+        }
+    }
+    state.SetBytesProcessed(bytes);
+}
+
 static void BenchmarkArguments(benchmark::internal::Benchmark* b)
 {
     b->Unit(benchmark::kNanosecond);
@@ -104,6 +125,9 @@ BENCHMARK_CAPTURE(xoshiro256ss_generate, xoshiro256ss, iterations)
     ->Apply(BenchmarkArguments);
 
 BENCHMARK_CAPTURE(xoshiro64s_generate, xoshiro64s, iterations)
+    ->Apply(BenchmarkArguments);
+
+BENCHMARK_CAPTURE(rand48_generate, rand48, iterations)
     ->Apply(BenchmarkArguments);
 
 BENCHMARK_MAIN();
