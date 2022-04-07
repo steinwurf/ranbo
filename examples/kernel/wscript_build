@@ -1,0 +1,70 @@
+import os
+import shutil
+
+
+def make_module(task):
+
+    args = []
+    bld = task.generator.bld
+
+    # Get the name of the targets
+    target_names = [o.name for o in task.outputs]
+    # Set the target path
+    target_path = os.path.dirname(task.outputs[0].abspath())
+
+    args += ["CC=" + bld.env.get_flat("CC")]
+
+    # Set the kernel path
+    if bld.has_tool_option("kernel_path"):
+        args += ["KERNELPATH=" + bld.get_tool_option("kernel_path")]
+
+    # Create a clean temporary folder for building the module
+    build_dir = dict(os.environ).get(
+        "MODULE_BUILD_PATH", os.path.join(bld.top_dir, "build", "kernel")
+    )
+
+    if os.path.isdir(build_dir):
+        shutil.rmtree(build_dir)
+
+    # Get the current directory
+    current_dir = task.generator.path.abspath()
+
+    shutil.copytree(current_dir, build_dir)
+
+    ret = bld.exec_command(["make"] + args, cwd=build_dir)
+
+    if ret:
+        bld.fatal("make returned %r" % ret)
+
+    bld.exec_command(["cp"] + target_names + [target_path], cwd=build_dir)
+
+    return ret
+
+
+gen = bld(
+    rule=make_module,
+    after="ranbo",
+    source=["main.c"],
+    target=["main.ko", "Module.symvers"],
+    install_path="${PREFIX}/lib",
+    name="main",
+)
+
+gen.post()
+
+try:
+    # We can only install the Module.symvers file if this is the
+    # top-level module, otherwise it would clash with the Module.symvers
+    # of the actual top-level module (which contains the sum of all
+    # symbols defined in our modules)
+    main = bld.get_tgen_by_name("main")
+    # If this is NOT the top-level module
+    if bld.srcnode != bld.path.parent:
+        outputs = []
+        for node in main.install_task.outputs:
+            # Remove Module.symvers from the install outputs
+            if node.name != "Module.symvers":
+                outputs.append(node)
+        main.install_task.outputs = outputs
+except:
+    pass

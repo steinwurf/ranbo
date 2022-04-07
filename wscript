@@ -5,6 +5,27 @@ APPNAME = "ranbo"
 VERSION = "0.0.0"
 
 import os
+import sys
+
+from waflib.Build import BuildContext
+
+
+def options(opt):
+    opts = opt.add_option_group("Kernel options")
+
+    opts.add_option(
+        "--kernel_example",
+        action="store_true",
+        default=None,
+        help="Enable kernel build",
+    )
+
+    opts.add_option(
+        "--kernel_path",
+        default=None,
+        dest="kernel_path",
+        help="Set the path to the Linux kernel sources",
+    )
 
 
 def build(bld):
@@ -24,6 +45,27 @@ def build(bld):
         bld.recurse("examples")
 
         bld.recurse("benchmark")
+
+        if bld.get_tool_option("kernel_example"):
+
+            bld.recurse("examples/kernel")
+
+
+class ReleaseContext(BuildContext):
+    cmd = "prepare_release"
+    fun = "prepare_release"
+
+
+def prepare_release(ctx):
+    """Prepare a release."""
+
+    # Rewrite versions
+    with ctx.rewrite_file(filename="src/ranbo/ranbo.h") as f:
+
+        pattern = r'#define STEINWURF_RANBO_VERSION "\d+\.\d+\.\d+"'
+        replacement = '#define STEINWURF_RANBO_VERSION "{}"'.format(VERSION)
+
+        f.regex_replace(pattern=pattern, replacement=replacement)
 
 
 def docs(ctx):

@@ -50,7 +50,4 @@ jobs:
       - name: Waf Build
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
-          python3 waf
-      - name: Make example
-        working-directory: ${{github.workspace}}/examples/kernel/
-        run: make KERNELPATH=$MODULE_BUILD_PATH
+          python3 waf --kernel_example --kernel_path=${{ matrix.config.kernel_path }}
