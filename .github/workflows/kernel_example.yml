@@ -55,4 +55,4 @@ jobs:
       #   run: mkdir ${{ matrix.config.kernel_path }}
       - name: Make example
         working-directory: ${{github.workspace}}/examples/kernel/
-        run: make KERNEL_PATH=${{ matrix.config.kernel_path }}
+        run: make KERNELPATH=${{ matrix.config.kernel_path }}
