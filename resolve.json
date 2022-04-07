@@ -19,16 +19,6 @@
         ]
     },
     {
-        "name": "boost",
-        "internal": true,
-        "resolver": "git",
-        "method": "semver",
-        "major": 4,
-        "sources": [
-            "github.com/steinwurf/boost.git"
-        ]
-    },
-    {
         "name": "gbenchmark",
         "internal": true,
         "resolver": "git",

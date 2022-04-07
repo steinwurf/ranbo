@@ -5,7 +5,7 @@ bld.program(
     features="cxx",
     source="bit_occurrences.cpp",
     target="bit_occurrences_example",
-    use=["ranbo_includes", "boost_includes"],
+    use=["ranbo_includes"],
 )
 
 bld.program(

@@ -5,9 +5,6 @@
 #include <numeric>
 #include <vector>
 
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
-
 #include <ranbo/rand48.h>
 #include <ranbo/xoshiro256ss.h>
 #include <ranbo/xoshiro64s.h>
@@ -31,7 +28,6 @@ void run(int iterations)
     std::cout << "seed: " << seed << std::endl;
     std::vector<double> xoshiro256_count(64);
     std::vector<double> xoshiro64_count(64);
-    std::vector<double> boost_mt_count(64);
     std::vector<double> rand48_count(64);
 
     for (auto j = 0; j < 64; j++)
@@ -40,8 +36,6 @@ void run(int iterations)
         xoshiro256_count[j] = 0;
 
         xoshiro64_count[j] = 0;
-
-        boost_mt_count[j] = 0;
 
         rand48_count[j] = 0;
     }
@@ -52,27 +46,19 @@ void run(int iterations)
 
     ranbo_xoshiro64s x64generator;
 
-    boost::random::mt19937 mt_generator;
-
-    boost::random::uniform_int_distribution<uint64_t> dist;
-
     ranbo_xoshiro256ss_set_seed(&x256generator, seed);
 
     ranbo_xoshiro64s_set_seed(&x64generator, seed);
 
     ranbo_rand48_set_seed(&rand48, (uint32_t)seed);
 
-    mt_generator.seed(seed);
-
     std::vector<uint64_t> xoshiro256_vector;
     std::vector<uint64_t> xoshiro64_vector;
     std::vector<uint64_t> rand48_vector;
-    std::vector<uint64_t> mt_vector;
 
     xoshiro256_vector.reserve(iterations);
     xoshiro64_vector.reserve(iterations);
     rand48_vector.reserve(iterations);
-    mt_vector.reserve(iterations);
 
     for (auto i = 0; i < iterations; i++)
     {
@@ -84,7 +70,6 @@ void run(int iterations)
         rand48_vector.push_back(
             ((uint64_t)ranbo_rand48_generate(&rand48) << 32) |
             (uint64_t)ranbo_rand48_generate(&rand48));
-        mt_vector.push_back(dist(mt_generator));
 
         for (auto j = 0; j < 64; j++)
         {
@@ -95,10 +80,6 @@ void run(int iterations)
             if (xoshiro64_vector.back() & (1ULL << j))
             {
                 xoshiro64_count[j]++;
-            }
-            if (mt_vector.back() & (1ULL << j))
-            {
-                boost_mt_count[j]++;
             }
             if (rand48_vector.back() & (1ULL << j))
             {
@@ -112,8 +93,6 @@ void run(int iterations)
 
         ranbo_xoshiro64s_set_seed(&x64generator, seed);
 
-        mt_generator.seed(seed);
-
         ranbo_rand48_set_seed(&rand48, (uint32_t)seed);
     }
     std::cout << std::fixed;
@@ -123,17 +102,12 @@ void run(int iterations)
 
     double xoshiro64_variance = calculate_variance(xoshiro64_count);
 
-    double boost_mt_variance = calculate_variance(boost_mt_count);
-
     double rand48_variance = calculate_variance(rand48_count);
 
     std::cout << "iterations = " << iterations << std::endl << std::endl;
     std::cout << "xoshiro256ss variance: " << xoshiro256_variance << std::endl;
 
     std::cout << "xoshiro64s variance:  " << xoshiro64_variance << std::endl
-              << std::endl;
-
-    std::cout << "boost mt variance:     " << boost_mt_variance << std::endl
               << std::endl;
 
     std::cout << "rand48 variance:     " << rand48_variance << std::endl
@@ -156,16 +130,6 @@ void run(int iterations)
         << " "
         << (*std::min_element(xoshiro64_count.begin(), xoshiro64_count.end()) /
             (double)iterations)
-        << std::endl;
-
-    std::cout
-        << "boost mt max/min:     "
-        << (*std::max_element(boost_mt_count.begin(), boost_mt_count.end()) /
-            (double)iterations)
-        << " "
-        << (*std::min_element(boost_mt_count.begin(), boost_mt_count.end()) /
-            (double)iterations)
-        << std::endl
         << std::endl;
 
     std::cout << "rand48 max/min:     "
