@@ -42,7 +42,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Waf Configure
-        run: python3 waf configure --git_protocol=git@ --kernel --kernel_path=/lib/modules/${{matrix.config.kernel_version}}/build  $EXTRA_RESOLVE_OPTIONS
+        run: python3 waf configure --git_protocol=git@ $EXTRA_RESOLVE_OPTIONS
       - name: Waf Build
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
