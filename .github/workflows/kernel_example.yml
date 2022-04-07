@@ -48,7 +48,8 @@ jobs:
       - name: Waf Configure
         run: python3 waf configure --git_protocol=git@ $EXTRA_RESOLVE_OPTIONS
       - name: List Modules directory
-        run: ls -d /lib/modules/
+        working-directory: /lib/modules
+        run: ls -la
       - name: Waf Build
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
