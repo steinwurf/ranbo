@@ -48,7 +48,7 @@ jobs:
       - name: Waf Configure
         run: python3 waf configure --git_protocol=git@ $EXTRA_RESOLVE_OPTIONS
       - name: List Modules directory
-        working-directory: /lib/modules
+        working-directory: /lib/modules/4.15.0-144-amd64
         run: ls -la
       - name: Waf Build
         run: |
