@@ -11,13 +11,14 @@ from waflib.Build import BuildContext
 
 
 def options(opt):
+
     opts = opt.add_option_group("Kernel options")
 
     opts.add_option(
         "--kernel_example",
         action="store_true",
-        default=None,
-        help="Enable kernel build",
+        default=False,
+        help="Enable kernel example build",
     )
 
     opts.add_option(
@@ -30,11 +31,7 @@ def options(opt):
 
 def build(bld):
 
-    bld(
-        includes="./src",
-        export_includes="./src",
-        name="ranbo_includes",
-    )
+    bld(includes="src", export_includes="src", name="ranbo_includes")
 
     if bld.is_toplevel():
 
@@ -47,7 +44,6 @@ def build(bld):
         bld.recurse("benchmark")
 
         if bld.get_tool_option("kernel_example"):
-
             bld.recurse("examples/kernel")
 
 

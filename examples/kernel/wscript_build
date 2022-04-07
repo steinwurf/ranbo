@@ -43,7 +43,7 @@ def make_module(task):
 
 gen = bld(
     rule=make_module,
-    after="ranbo",
+    after="ranbo_includes",
     source=["main.c"],
     target=["main.ko", "Module.symvers"],
     install_path="${PREFIX}/lib",
