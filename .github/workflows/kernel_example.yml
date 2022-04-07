@@ -51,8 +51,8 @@ jobs:
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
           python3 waf
-      - name: Make build directory
-        run: mkdir ${{ matrix.config.kernel_path }}
+      # - name: Make build directory
+      #   run: mkdir ${{ matrix.config.kernel_path }}
       - name: Make example
         working-directory: ${{github.workspace}}/examples/kernel/
         run: KERNEL_PATH=${{ matrix.config.kernel_path }} make
