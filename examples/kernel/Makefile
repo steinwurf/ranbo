@@ -12,6 +12,6 @@ all:
 	$(MAKE) -C $(KERNELPATH) M=$(PWD) PWD=$(PWD) modules
 
 clean:
-	make -C $(KERNELPATH) M=$(PWD) clean
+	$(MAKE) -C $(KERNELPATH) M=$(PWD) clean
 
 .PHONY: all clean

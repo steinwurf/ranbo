@@ -20,15 +20,19 @@ jobs:
           - container: conanio/gcc8
             name: Kernel 4.15.0
             kernel_version: 4.15.0-144-generic
+            kernel_path: /lib/modules/4.15.0-144-amd64/build
           - container: conanio/gcc10
             name: Kernel 5.4.0
             kernel_version: 5.4.0-74-generic
+            kernel_path: /lib/modules/5.4.0-74-amd64/build
           - container: conanio/gcc10
             name: Kernel 5.8.0
             kernel_version: 5.8.0-53-generic
+            kernel_path: /lib/modules/5.8.0-53-amd64/build
           - container: conanio/gcc10
             name: Kernel 5.13.0
             kernel_version: 5.13.0-30-generic
+            kernel_path: /lib/modules/5.13.0-30-amd64/build
     runs-on: [self-hosted, docker, builder]
     name: ${{ matrix.config.name }}
     container:
@@ -47,6 +51,8 @@ jobs:
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
           python3 waf
+      - name: Make build directory
+        run: mkdir ${{ matrix.config.kernel_path }}
       - name: Make example
         working-directory: ${{github.workspace}}/examples/kernel/
-        run: make
+        run: KERNEL_PATH=${{ matrix.config.kernel_path }} make
