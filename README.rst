@@ -49,5 +49,5 @@ linux-kernel-space that are fast and sufficiently random on a bit-level.
 
 Documentation can be found here:
 
-* `latest <ranbo.steinwurf.com/latest>`_.
-* `stable <ranbo.steinwurf.com/stable>`_.
+* `latest <steinwurf-ranbo.netlify.app/latest>`_.
+* `stable <steinwurf-ranbo.netlify.app/stable>`_.
