@@ -48,5 +48,5 @@ jobs:
           echo "::add-matcher::.github/gcc-problem-matcher.json"
           python3 waf
       - name: Make example
-        working_directory: ${{github.workspace}}/examples/kernel/
+        working-directory: ${{github.workspace}}/examples/kernel/
         run: make
