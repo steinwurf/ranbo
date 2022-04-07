@@ -26,13 +26,13 @@ Ranbo
    :target: https://github.com/steinwurf/ranbo/actions/workflows/raspberry_pi.yml
 
 .. |Kernel Example| image:: https://github.com/steinwurf/ranbo/actions/workflows/kernel_example.yml/badge.svg
-   :target: https://github.com/steinwurf/ranbo/actions/workflows/kernel_build.yml
+   :target: https://github.com/steinwurf/ranbo/actions/workflows/kernel_example.yml
 
 .. |Clang Format| image:: https://github.com/steinwurf/ranbo/actions/workflows/clang-format.yml/badge.svg
-   :target: https://github.com/steinwurf/ranbo/actions/workflows/cppcheck.yml
+   :target: https://github.com/steinwurf/ranbo/actions/workflows/clang-format.yml
 
 .. |CppCheck| image:: https://github.com/steinwurf/ranbo/actions/workflows/cppcheck.yml/badge.svg
-   :target: https://github.com/steinwurf/ranbo/actions/workflows/clang-format.yml
+   :target: https://github.com/steinwurf/ranbo/actions/workflows/cppcheck.yml
 
 .. |Debug| image:: https://github.com/steinwurf/ranbo/actions/workflows/debug.yml/badge.svg
    :target: https://github.com/steinwurf/ranbo/actions/workflows/debug.yml
