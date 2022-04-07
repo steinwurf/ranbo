@@ -1,5 +1,5 @@
-Multiple Metrics
-================
+Bit Occurences
+==============
 
 This example shows how to measure the bit-randomness of the RNG's.
 
