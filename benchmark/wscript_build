@@ -5,19 +5,19 @@ bld.program(
     features="cxx",
     source="seeding.cpp",
     target="seeding",
-    use=["ranbo_includes", "boost_includes", "gbenchmark"],
+    use=["ranbo_includes", "gbenchmark"],
 )
 
 bld.program(
     features="cxx",
     source="generation.cpp",
     target="generation",
-    use=["ranbo_includes", "boost_includes", "gbenchmark"],
+    use=["ranbo_includes", "gbenchmark"],
 )
 
 bld.program(
     features="cxx",
     source="generate_and_seed.cpp",
     target="generate_and_seed",
-    use=["ranbo_includes", "boost_includes", "gbenchmark"],
+    use=["ranbo_includes", "gbenchmark"],
 )

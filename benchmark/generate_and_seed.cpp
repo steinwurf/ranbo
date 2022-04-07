@@ -10,32 +10,6 @@
 #include <ranbo/xoshiro256ss.h>
 #include <ranbo/xoshiro64s.h>
 
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
-
-static void boost_mt_generate_and_seed(benchmark::State& state,
-                                       std::size_t iterations)
-{
-    boost::random::mt19937 generator;
-    boost::random::uniform_int_distribution<uint32_t> dist;
-
-    std::size_t bytes = 0;
-
-    for (auto _ : state)
-    {
-        for (std::size_t i = 0; i < iterations; i++)
-        {
-            generator.seed((uint32_t)i);
-
-            auto random_number = dist(generator);
-            benchmark::DoNotOptimize(random_number);
-            bytes += 4;
-            benchmark::ClobberMemory();
-        }
-    }
-    state.SetBytesProcessed(bytes);
-}
-
 static void xoshiro256ss_generate_and_seed(benchmark::State& state,
                                            std::size_t iterations)
 {
@@ -135,9 +109,6 @@ static void BenchmarkArguments(benchmark::internal::Benchmark* b)
 }
 
 std::size_t iterations = 5000U;
-
-BENCHMARK_CAPTURE(boost_mt_generate_and_seed, mersenne_boost, iterations)
-    ->Apply(BenchmarkArguments);
 
 BENCHMARK_CAPTURE(std_mt_generate_and_seed, mersenne_std, iterations)
     ->Apply(BenchmarkArguments);

@@ -6,6 +6,8 @@ TEST(test_xoshiro64s, api)
 {
     struct ranbo_xoshiro64s generator;
 
+    ranbo_xoshiro64s_set_seed(&generator, 0U);
+
     EXPECT_EQ(generator.seed[0], 3793791033U);
     EXPECT_EQ(generator.seed[1], 2065550767U);
 
