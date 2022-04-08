@@ -6,3 +6,4 @@ Examples
    :maxdepth: 2
 
    bit_occurrences
+   kernel_example
