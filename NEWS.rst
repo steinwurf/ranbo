@@ -6,7 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
-* tbd
+* Patch: Prevent Waf Kernel Options from leaking to other projects.
 
 1.0.0
 -----
