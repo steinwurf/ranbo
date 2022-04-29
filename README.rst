@@ -51,5 +51,5 @@ linux-kernel-space that are fast and sufficiently random on a bit-level.
 
 Documentation can be found here:
 
-* `latest <steinwurf-ranbo.netlify.app/latest>`_.
-* `stable <steinwurf-ranbo.netlify.app/stable>`_.
+* `latest <https://steinwurf-ranbo.netlify.app/latest>`_.
+* `stable <https://steinwurf-ranbo.netlify.app/stable>`_.
