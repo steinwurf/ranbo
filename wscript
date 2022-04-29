@@ -12,21 +12,23 @@ from waflib.Build import BuildContext
 
 def options(opt):
 
-    opts = opt.add_option_group("Kernel options")
+    if opt.is_toplevel():
 
-    opts.add_option(
-        "--kernel_example",
-        action="store_true",
-        default=False,
-        help="Enable kernel example build",
-    )
+        opts = opt.add_option_group("Kernel options")
 
-    opts.add_option(
-        "--kernel_path",
-        default=None,
-        dest="kernel_path",
-        help="Set the path to the Linux kernel sources",
-    )
+        opts.add_option(
+            "--kernel_example",
+            action="store_true",
+            default=False,
+            help="Enable kernel example build",
+        )
+
+        opts.add_option(
+            "--kernel_path",
+            default=None,
+            dest="kernel_path",
+            help="Set the path to the Linux kernel sources",
+        )
 
 
 def build(bld):
