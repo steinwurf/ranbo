@@ -1,0 +1,23 @@
+name: PlatformIO
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *" # 3 AM CET
+  push:
+  pull_request:
+jobs:
+  platformio:
+    name: PlatformIO Build
+    runs-on: [self-hosted, docker, builder]
+    container:
+      image: ghcr.io/steinwurf/platformio:1.0.0
+      options: --user 0:0
+      volumes:
+        - /home/buildbot/.ssh:/root/.ssh
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Install Library with PlatformIO
+        run: pio lib -g install file://.
+      - name: Build example
+        run: pio ci --board=esp32dev examples/platform_io_example.ino

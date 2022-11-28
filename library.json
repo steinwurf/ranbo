@@ -1,0 +1,38 @@
+{
+  "name": "ranbo",
+  "version": "1.0.1",
+  "description": "A C Pseudo-Random-Number-Generator (PRNG) library.",
+  "keywords": [
+    "random"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steinwurf/ranbo.git"
+  },
+  "export": {
+    "exclude": [
+      ".github/**",
+      "benchmark/**",
+      "docs/**",
+      "examples/**",
+      "test/**",
+      ".clang-format",
+      ".gitignore",
+      "CMakeLists.txt",
+      "giit.json",
+      "resolve.json",
+      "waf",
+      "wscript"
+    ]
+  },
+  "build": {
+    "srcFilter": [
+      "+<*>"
+    ],
+    "srcDir": "src",
+    "includeDir": "src"
+  },
+  "frameworks": "*",
+  "platforms": "*",
+  "dependencies": []
+}
