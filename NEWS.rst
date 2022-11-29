@@ -6,6 +6,10 @@ every change, see the Git log.
 
 Latest
 ------
+* tbd
+
+1.1.0
+-----
 * Patch: Fix bug in `ranbo_xoshiro64s`.
 * Minor: Added Platform.io support.
 

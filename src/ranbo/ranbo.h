@@ -13,4 +13,4 @@
 #include <string.h>
 #endif
 
-#define STEINWURF_RANBO_VERSION "1.0.1"
+#define STEINWURF_RANBO_VERSION "1.1.0"
