@@ -65,6 +65,14 @@ def prepare_release(ctx):
 
         f.regex_replace(pattern=pattern, replacement=replacement)
 
+    # Rewrite versions
+    with ctx.rewrite_file(filename="library.json") as f:
+
+        pattern = r'"version": "\d+\.\d+\.\d+",'
+        replacement = '"version": "{}",'.format(VERSION)
+
+        f.regex_replace(pattern=pattern, replacement=replacement)
+
 
 def docs(ctx):
     """Build the documentation in a virtualenv"""
