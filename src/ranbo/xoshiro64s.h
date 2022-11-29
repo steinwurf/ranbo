@@ -62,12 +62,12 @@ inline void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* state,
 /// @return The generated random number as a uint32_t.
 inline uint32_t ranbo_xoshiro64s_generate(struct ranbo_xoshiro64s* state)
 {
+    const uint32_t s0 = state->seed[0];
     uint32_t s1 = state->seed[1];
-    uint32_t result = state->seed[0] * MULT_CONSTANT;
+    const uint32_t result = s0 * MULT_CONSTANT;
 
-    s1 ^= state->seed[0];
-    state->seed[0] = ranbo_detail_xoshiro64s_rotate(state->seed[0], 26) ^
-                     state->seed[1] ^ (state->seed[1] << 9);
-    state->seed[1] = ranbo_detail_xoshiro64s_rotate(state->seed[1], 13);
+    s1 ^= s0;
+    state->seed[0] = ranbo_detail_xoshiro64s_rotate(s0, 26) ^ s1 ^ (s1 << 9);
+    state->seed[1] = ranbo_detail_xoshiro64s_rotate(s1, 13);
     return result;
 }
