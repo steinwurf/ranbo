@@ -3,6 +3,7 @@
 extern "C"
 {
 #include <ranbo/ranbo.h>
+#include <ranbo/xoshiro256ss.h>
 }
 
 void setup()
