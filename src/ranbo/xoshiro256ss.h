@@ -65,9 +65,9 @@ inline void ranbo_xoshiro256ss_set_seed(struct ranbo_xoshiro256ss* state,
 /// @return A random number as a uint64_t
 inline uint64_t ranbo_xoshiro256ss_generate(struct ranbo_xoshiro256ss* state)
 {
-    uint64_t result =
+    const uint64_t result =
         ranbo_detail_xoshiro256ss_rotate(state->seed[1] * 5, 7) * 9;
-    uint64_t temp = state->seed[1] << 17;
+    const uint64_t temp = state->seed[1] << 17;
     state->seed[2] ^= state->seed[0];
     state->seed[3] ^= state->seed[1];
     state->seed[1] ^= state->seed[2];

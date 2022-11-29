@@ -6,6 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
+* Patch: Fix bug in `ranbo_xoshiro64s`.
 * Minor: Added Platform.io support.
 
 1.0.1
