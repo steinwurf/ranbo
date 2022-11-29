@@ -49,7 +49,8 @@ struct ranbo_rand48
 ///
 /// @param state - pointer to the PRNG state
 /// @param seed - the seed value to be used
-inline void ranbo_rand48_set_seed(struct ranbo_rand48* state, uint32_t seed)
+static inline void ranbo_rand48_set_seed(struct ranbo_rand48* state,
+                                         uint32_t seed)
 {
     state->seed[0] = RAND48_SEED_0;
     state->seed[1] = (uint16_t)seed;
@@ -64,7 +65,7 @@ inline void ranbo_rand48_set_seed(struct ranbo_rand48* state, uint32_t seed)
 ///
 /// @param state - pointer to the PRNG state
 /// @return - a pseudo-random value of type uint32_t
-inline uint32_t ranbo_rand48_generate(struct ranbo_rand48* state)
+static inline uint32_t ranbo_rand48_generate(struct ranbo_rand48* state)
 {
     uint32_t accu;
     uint16_t temp[2];

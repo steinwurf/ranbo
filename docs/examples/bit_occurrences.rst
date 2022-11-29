@@ -1,7 +1,7 @@
 Bit Occurrences
 ===============
 
-This example shows how to measure the bit-randomness of the RNG's.
+This example shows how to measure the bit-randomness of the RNG.
 
 The complete example is shown below.
 

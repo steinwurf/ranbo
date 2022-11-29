@@ -1,7 +1,7 @@
 Kernel Example
 ==============
 
-This example illustrates how to write a simple "hello world" linux kernel module,
+This example illustrates how to write a simple "hello world" Linux kernel module,
 that prints random numbers to the syslog. You can run it and type
 "sudo dmesg | grep Hello" in the terminal, to see the output from the module.
 

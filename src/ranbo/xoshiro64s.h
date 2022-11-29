@@ -21,13 +21,14 @@ struct ranbo_xoshiro64s
     uint32_t seed[2];
 };
 
-inline uint32_t ranbo_detail_xoshiro64s_rotate(uint32_t number,
-                                               int bits_to_rotate)
+static inline uint32_t ranbo_detail_xoshiro64s_rotate(uint32_t number,
+                                                      int bits_to_rotate)
 {
     return (number << bits_to_rotate) | (number >> (32 - bits_to_rotate));
 }
 
-inline uint64_t ranbo_detail_xoshiro64s_split_and_mix_seed(uint64_t* seed)
+static inline uint64_t
+ranbo_detail_xoshiro64s_split_and_mix_seed(uint64_t* seed)
 {
     uint64_t mix = (*seed += MIX_CONSTANT_1);
     mix = (mix ^ (mix >> 30)) * MIX_CONSTANT_2;
@@ -44,8 +45,8 @@ inline uint64_t ranbo_detail_xoshiro64s_split_and_mix_seed(uint64_t* seed)
 ///
 /// @param state The internal state of the PRNG.
 /// @param seed The seed to set.
-inline void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* state,
-                                      uint64_t seed)
+static inline void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* state,
+                                             uint64_t seed)
 {
     uint64_t temp_seed = seed;
     temp_seed = ranbo_detail_xoshiro64s_split_and_mix_seed(&temp_seed);
@@ -60,7 +61,7 @@ inline void ranbo_xoshiro64s_set_seed(struct ranbo_xoshiro64s* state,
 ///
 /// @param state The internal state of the PRNG.
 /// @return The generated random number as a uint32_t.
-inline uint32_t ranbo_xoshiro64s_generate(struct ranbo_xoshiro64s* state)
+static inline uint32_t ranbo_xoshiro64s_generate(struct ranbo_xoshiro64s* state)
 {
     const uint32_t s0 = state->seed[0];
     uint32_t s1 = state->seed[1];

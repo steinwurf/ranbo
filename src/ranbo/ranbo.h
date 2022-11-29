@@ -14,3 +14,7 @@
 #endif
 
 #define STEINWURF_RANBO_VERSION "1.1.0"
+
+#include "rand48.h"
+#include "xoshiro256ss.h"
+#include "xoshiro64s.h"
