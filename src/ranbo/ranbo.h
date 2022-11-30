@@ -13,7 +13,7 @@
 #include <string.h>
 #endif
 
-#define STEINWURF_RANBO_VERSION "1.1.0"
+#define STEINWURF_RANBO_VERSION "1.2.0"
 
 #include "rand48.h"
 #include "xoshiro256ss.h"
