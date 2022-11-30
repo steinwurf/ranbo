@@ -2,21 +2,21 @@
 # encoding: utf-8
 
 bld.program(
-    features="cxx",
+    features="cxx benchmark",
     source="seeding.cpp",
     target="seeding",
     use=["ranbo_includes", "gbenchmark"],
 )
 
 bld.program(
-    features="cxx",
+    features="cxx benchmark",
     source="generation.cpp",
     target="generation",
     use=["ranbo_includes", "gbenchmark"],
 )
 
 bld.program(
-    features="cxx",
+    features="cxx benchmark",
     source="generate_and_seed.cpp",
     target="generate_and_seed",
     use=["ranbo_includes", "gbenchmark"],

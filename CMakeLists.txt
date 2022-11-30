@@ -3,7 +3,6 @@ project(ranbo)
 
 # Define library
 add_library(ranbo INTERFACE)
-target_compile_features(ranbo INTERFACE cxx_std_14)
 target_include_directories(ranbo INTERFACE src/)
 add_library(steinwurf::ranbo ALIAS ranbo)
 
@@ -12,12 +11,14 @@ install(
   DIRECTORY ./src/ranbo
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include
   FILES_MATCHING
-  PATTERN *.hpp)
+  PATTERN *.h)
 
 # Is top level project?
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
   # Build executables
   add_executable(bit_occurrences examples/bit_occurrences.cpp)
+  target_compile_features(bit_occurrences PUBLIC cxx_std_11)
+
   add_executable(hello_world examples/hello_world.cpp)
   target_link_libraries(bit_occurrences ranbo)
   target_link_libraries(hello_world ranbo)

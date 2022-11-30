@@ -2,8 +2,8 @@ Ranbo Documentation
 ===================
 
 Ranbo is a C Random-Number-Generator library. We wanted to create a library that
-allows us to use random-number-generators in both user-space and
-linux-kernel-space that are fast and sufficiently random on a bit-level.
+allows us to use random number generators in both user-space and
+Linux-kernel-space that are fast and sufficiently random on a bit-level.
 
 The Ranbo repository: https://github.com/steinwurf/ranbo
 
