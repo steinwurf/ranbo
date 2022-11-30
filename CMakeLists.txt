@@ -3,7 +3,6 @@ project(ranbo)
 
 # Define library
 add_library(ranbo INTERFACE)
-target_compile_features(ranbo INTERFACE cxx_std_14)
 target_include_directories(ranbo INTERFACE src/)
 add_library(steinwurf::ranbo ALIAS ranbo)
 
@@ -12,7 +11,7 @@ install(
   DIRECTORY ./src/ranbo
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include
   FILES_MATCHING
-  PATTERN *.hpp)
+  PATTERN *.h)
 
 # Is top level project?
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
