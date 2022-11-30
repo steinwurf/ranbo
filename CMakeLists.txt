@@ -17,6 +17,7 @@ install(
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
   # Build executables
   add_executable(bit_occurrences examples/bit_occurrences.cpp)
+  target_compile_features(bit_occurrences INTERFACE cxx_std_11)
   add_executable(hello_world examples/hello_world.cpp)
   target_link_libraries(bit_occurrences ranbo)
   target_link_libraries(hello_world ranbo)
