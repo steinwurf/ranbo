@@ -11,9 +11,7 @@ from waflib.Build import BuildContext
 
 
 def options(opt):
-
     if opt.is_toplevel():
-
         opts = opt.add_option_group("Kernel options")
 
         opts.add_option(
@@ -31,12 +29,14 @@ def options(opt):
         )
 
 
-def build(bld):
+def configure(conf):
+    conf.set_cxx_std(11)
 
+
+def build(bld):
     bld(includes="src", export_includes="src", name="ranbo_includes")
 
     if bld.is_toplevel():
-
         # Only build tests when executed from the top-level wscript,
         # i.e. not when included as a dependency
         bld.recurse("test")
@@ -59,7 +59,6 @@ def prepare_release(ctx):
 
     # Rewrite versions
     with ctx.rewrite_file(filename="src/ranbo/ranbo.h") as f:
-
         pattern = r'#define STEINWURF_RANBO_VERSION "\d+\.\d+\.\d+"'
         replacement = '#define STEINWURF_RANBO_VERSION "{}"'.format(VERSION)
 
@@ -67,7 +66,6 @@ def prepare_release(ctx):
 
     # Rewrite versions
     with ctx.rewrite_file(filename="library.json") as f:
-
         pattern = r'"version": "\d+\.\d+\.\d+",'
         replacement = '"version": "{}",'.format(VERSION)
 
@@ -78,7 +76,6 @@ def docs(ctx):
     """Build the documentation in a virtualenv"""
 
     with ctx.create_virtualenv() as venv:
-
         # To update the requirements.txt just delete it - a fresh one
         # will be generated from test/requirements.in
         if not os.path.isfile("docs/requirements.txt"):
@@ -98,7 +95,6 @@ def docs(ctx):
 
 
 def run_benchmarks(ctx):
-
     venv = ctx.create_virtualenv(name="virtualenv-plots", overwrite=False)
 
     # seeding benchmark
