@@ -8,7 +8,7 @@ name: PlatformIO
   push:
     branches:
     - master
-  pull_request:
+  pull_request: null
 jobs:
   platformio:
     name: PlatformIO Build
@@ -28,3 +28,6 @@ jobs:
       run: pio lib -g install file://.
     - name: Build example
       run: pio ci --board=esp32dev examples/platform_io_example.ino
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
