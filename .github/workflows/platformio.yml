@@ -8,7 +8,7 @@ name: PlatformIO
   push:
     branches:
     - master
-  pull_request: null
+  pull_request:
 jobs:
   platformio:
     name: PlatformIO Build
