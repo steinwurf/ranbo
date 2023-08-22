@@ -8,7 +8,7 @@ name: Build Kernel Example
   push:
     branches:
     - master
-  pull_request:
+  pull_request: null
 env:
   EXTRA_RESOLVE_OPTIONS: ${{ github.event.inputs.resolve_options }}
 jobs:
@@ -56,3 +56,6 @@ jobs:
         python3 waf --kernel_example --kernel_path=${{ matrix.config.kernel_path }}
 
         '
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
