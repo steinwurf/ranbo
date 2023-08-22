@@ -51,3 +51,9 @@ jobs:
         run: |
           echo "::add-matcher::.github/gcc-problem-matcher.json"
           python3 waf --kernel_example --kernel_path=${{ matrix.config.kernel_path }}
+
+# Cancel previous in-progress when pushing: https://stackoverflow.com/a/72408109
+concurrency:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
