@@ -33,10 +33,10 @@
     "includeDir": "src"
   },
   "headers": [
-    "src/ranbo.h",
-    "src/rand48.h",
-    "src/xoshiro64s.h",
-    "src/xoshiro256ss.h"
+    "ranbo.h",
+    "rand48.h",
+    "xoshiro64s.h",
+    "xoshiro256ss.h"
   ],
   "frameworks": "*",
   "platforms": "*",
