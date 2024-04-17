@@ -27,7 +27,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Install Library with PlatformIO
-        run: pio lib -g install file://.
+        run: pio pkg install -g -l file://.
       - name: Build example
         run: pio ci --board=esp32dev examples/platform_io_example.ino
 concurrency:

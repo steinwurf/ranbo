@@ -32,12 +32,6 @@
     "srcDir": "src",
     "includeDir": "src"
   },
-  "headers": [
-    "ranbo.h",
-    "rand48.h",
-    "xoshiro64s.h",
-    "xoshiro256ss.h"
-  ],
   "frameworks": "*",
   "platforms": "*",
   "dependencies": []
