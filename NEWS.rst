@@ -6,6 +6,7 @@ every change, see the Git log.
 
 Latest
 ------
+* Major: Only builds with CMake
 * Patch: Fix platformio build.
 
 2.0.0

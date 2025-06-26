@@ -10,43 +10,24 @@ import sys
 from waflib.Build import BuildContext
 
 
-def options(opt):
-    if opt.is_toplevel():
-        opts = opt.add_option_group("Kernel options")
-
-        opts.add_option(
-            "--kernel_example",
-            action="store_true",
-            default=False,
-            help="Enable kernel example build",
-        )
-
-        opts.add_option(
-            "--kernel_path",
-            default=None,
-            dest="kernel_path",
-            help="Set the path to the Linux kernel sources",
-        )
+def options(ctx):
+    ctx.load("cmake")
 
 
-def configure(conf):
-    conf.set_cxx_std(11)
+def configure(ctx):
+
+    ctx.load("cmake")
+
+    if ctx.is_toplevel():
+        ctx.cmake_configure()
 
 
-def build(bld):
-    bld(includes="src", export_includes="src", name="ranbo_includes")
+def build(ctx):
 
-    if bld.is_toplevel():
-        # Only build tests when executed from the top-level wscript,
-        # i.e. not when included as a dependency
-        bld.recurse("test")
+    ctx.load("cmake")
 
-        bld.recurse("examples")
-
-        bld.recurse("benchmark")
-
-        if bld.get_tool_option("kernel_example"):
-            bld.recurse("examples/kernel")
+    if ctx.is_toplevel():
+        ctx.cmake_build()
 
 
 class ReleaseContext(BuildContext):
@@ -92,22 +73,3 @@ def docs(ctx):
         venv.run(
             "giit sphinx . --build_path {}".format(build_path), cwd=ctx.path.abspath()
         )
-
-
-def run_benchmarks(ctx):
-    venv = ctx.create_virtualenv(name="virtualenv-plots", overwrite=False)
-
-    # seeding benchmark
-    venv.run(
-        "build_current/benchmark/seeding --benchmark_out='benchmark_results/seeding.json' --benchmark_counters_tabular=true"
-    )
-
-    # generation benchmark
-    venv.run(
-        "build_current/benchmark/generation --benchmark_out='benchmark_results/generation.json' --benchmark_counters_tabular=true"
-    )
-
-    # seed and generate benchmark
-    venv.run(
-        "build_current/benchmark/generate_and_seed --benchmark_out='benchmark_results/generate_and_seed.json' --benchmark_counters_tabular=true"
-    )
