@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 APPNAME = "ranbo"
-VERSION = "2.0.0"
+VERSION = "3.0.0"
 
 import os
 import sys
